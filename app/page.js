@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import ProductCard from './components/ProductCard';
-import { Facebook, Twitter, Instagram, Github, FileStack, Palette, Sparkles, Brush, Eye, Users, BookOpen, FileStackIcon, Calendar, Award, Shield, SparklesIcon } from 'lucide-react'
+import { Facebook, Twitter, Instagram, Github, FileStack, Palette, Sparkles, Brush, Eye, Users, BookOpen, Calendar, Award, Shield, } from 'lucide-react'
 import ServiceCard from './components/ProductCard';
 
 export default function Home() {
@@ -258,7 +258,7 @@ export default function Home() {
                   ))}
                 </select>
                 <button className="flex gap-2 justify-center items-center px-6 py-4 bg-gradient-to-r from-amber-700 to-amber-900 text-amber-50 font-semibold rounded-lg hover:from-amber-600 hover:to-yellow-800 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-900/30">
-                  <FileStackIcon size={20}/>
+                  <FileStack size={20}/>
                   Request Booking
                 </button>
               </div>
