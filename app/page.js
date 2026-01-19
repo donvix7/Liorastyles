@@ -30,15 +30,15 @@ export default function Home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             // Add animation classes
-            entry.target.classList.add('opacity-100', 'translate-y-0');
-            entry.target.classList.remove('opacity-0', 'translate-y-12');
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
             
             // Also animate child elements with delays
             const animatedChildren = entry.target.querySelectorAll('[data-animate]');
             animatedChildren.forEach((child, index) => {
               setTimeout(() => {
-                child.classList.add('opacity-100', 'translate-y-0');
-                child.classList.remove('opacity-0', 'translate-y-6');
+                child.style.opacity = '1';
+                child.style.transform = 'translateY(0)';
               }, index * 200);
             });
           }
@@ -80,7 +80,6 @@ export default function Home() {
       id: 2,
       name: "Evening Glam Transformation",
       imageUrl: "/images/services/gal.jpg",
-
       category: "Special Event",
       price: "$180",
       duration: "2 hours",
@@ -93,7 +92,6 @@ export default function Home() {
       id: 3,
       name: "Natural Daytime Makeover",
       imageUrl: "/images/services/daily.jpg",
-
       category: "Day Makeup",
       price: "$120",
       duration: "1.5 hours",
@@ -106,7 +104,6 @@ export default function Home() {
       id: 4,
       name: "Editorial Photoshoot Makeup",
       imageUrl: "/images/services/shoot.jpg",
-      
       category: "Professional",
       price: "$300",
       duration: "4+ hours",
@@ -119,11 +116,10 @@ export default function Home() {
       id: 5,
       name: "Group Makeup Sessions",
       imageUrl: "/images/services/Your Foundation Dilemmas Solved _ Essence.jpeg",
-
       category: "Group Service",
       price: "$90/person",
       duration: "1 hour/person",
-      icon: <Users className="w-12 h-12 text-amber-300" />, // Add Users import
+      icon: <Users className="w-12 h-12 text-amber-300" />,
       imageColor: "bg-gradient-to-br from-amber-800 via-yellow-700 to-amber-900",
       description: "Perfect for bridal parties, proms, or group events with customized looks",
       features: ["Minimum 3 people", "Customized looks", "Group discount", "Travel available"]
@@ -132,11 +128,10 @@ export default function Home() {
       id: 6,
       name: "Makeup Lesson & Consultation",
       imageUrl: "/images/services/lesson.jpg",
-
       category: "Education",
       price: "$150",
       duration: "2 hours",
-      icon: <BookOpen className="w-12 h-12 text-amber-300" />, // Add BookOpen import
+      icon: <BookOpen className="w-12 h-12 text-amber-300" />,
       imageColor: "bg-gradient-to-br from-amber-600 via-yellow-500 to-amber-800",
       description: "Personalized lesson teaching you how to recreate your favorite Liora looks",
       features: ["Product guidance", "Technique tutorial", "Take-home notes", "Product samples"]
@@ -157,7 +152,6 @@ export default function Home() {
         setIsMenuOpen={setIsMenuOpen}
       />
       
-      {/* REMOVED snap scrolling classes from main */}
       <main className="min-h-screen bg-black text-amber-50">
         {/* Hero section */}
         <section>
@@ -167,26 +161,42 @@ export default function Home() {
         {/* Featured Products Section */}
         <section 
           ref={featuredRef}
-          className="py-16 px-4 max-w-7xl mx-auto opacity-0 translate-y-12 transition-all duration-1000 ease-out"
+          style={{ 
+            opacity: 1, 
+            transform: 'translateY(48px)',
+            transition: 'all 1000ms ease-out'
+          }}
+          className="py-16 px-4 max-w-7xl mx-auto"
         >
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-serif mb-4" data-animate="true">Featured Collection</h2>
+            <h2 className="text-4xl font-serif mb-4" data-animate="true">Premium Makeup Services</h2>
             <div className="relative z-10 flex justify-center" data-animate="true">
               <div className="h-1 w-64 bg-gradient-to-r from-transparent via-amber-500 to-transparent"></div>
             </div>
-            <p className="mt-6 text-amber-200 max-w-2xl mx-auto opacity-0 translate-y-6 transition-all duration-800 ease-out delay-300" data-animate="true">
+            <p 
+              data-animate="true"
+              style={{
+                opacity: 0,
+                transform: 'translateY(24px)',
+                transition: 'all 800ms ease-out',
+                transitionDelay: '300ms'
+              }}
+              className="mt-6 text-amber-200 max-w-2xl mx-auto"
+            >
               Discover our signature line of luxury makeup products, 
               where timeless elegance meets modern innovation.
             </p>
           </div>
           
-          {/* Product cards */}
+          {/* Service cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {makeupServices.map((service, index) => (
               <div 
                 key={service.id}
-                className="opacity-0 translate-y-8 transition-all duration-700 ease-out"
                 style={{ 
+                  opacity: 1,
+                  transform: 'translateY(32px)',
+                  transition: 'all 700ms ease-out',
                   transitionDelay: `${index * 150}ms`,
                   transitionProperty: 'opacity, transform'
                 }}
@@ -204,34 +214,96 @@ export default function Home() {
         {/* About Section */}
         <section 
           ref={aboutRef}
-          className="py-16 px-4 bg-gradient-to-t from-black to-gray-900 min-h-screen flex items-center opacity-0 translate-y-12 transition-all duration-1000 ease-out"
+          style={{ 
+            opacity: 0, 
+            transform: 'translateY(48px)',
+            transition: 'all 1000ms ease-out'
+          }}
+          className="py-16 px-4 bg-gradient-to-t from-black to-gray-900 min-h-screen flex items-center"
         >
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-serif mb-6 opacity-0 translate-y-6 transition-all duration-800 ease-out" data-animate="true">The Liora Philosophy</h2>
-            <div className="h-1 w-64 bg-gradient-to-r from-transparent via-amber-300 to-transparent mx-auto mb-8 opacity-0 translate-y-6 transition-all duration-800 ease-out delay-200" data-animate="true"></div>
-            <p className="text-xl text-amber-100 mb-6 opacity-0 translate-y-6 transition-all duration-800 ease-out delay-400" data-animate="true">
+            <h2 
+              data-animate="true"
+              style={{
+                opacity: 0,
+                transform: 'translateY(24px)',
+                transition: 'all 800ms ease-out'
+              }}
+              className="text-4xl font-serif mb-6"
+            >
+              The Liora Philosophy
+            </h2>
+            <div 
+              data-animate="true"
+              style={{
+                opacity: 0,
+                transform: 'translateY(24px)',
+                transition: 'all 800ms ease-out',
+                transitionDelay: '200ms'
+              }}
+              className="h-1 w-64 bg-gradient-to-r from-transparent via-amber-300 to-transparent mx-auto mb-8"
+            ></div>
+            <p 
+              data-animate="true"
+              style={{
+                opacity: 0,
+                transform: 'translateY(24px)',
+                transition: 'all 800ms ease-out',
+                transitionDelay: '400ms'
+              }}
+              className="text-xl text-amber-100 mb-6"
+            >
               At Liora, we believe makeup is an art form—a way to express your 
               inner radiance and confidence. Our black and gold collection 
               embodies sophistication, luxury, and timeless beauty.
             </p>
-            <p className="text-lg text-amber-200 mb-6 opacity-0 translate-y-6 transition-all duration-800 ease-out delay-600" data-animate="true">
+            <p 
+              data-animate="true"
+              style={{
+                opacity: 0,
+                transform: 'translateY(24px)',
+                transition: 'all 800ms ease-out',
+                transitionDelay: '600ms'
+              }}
+              className="text-lg text-amber-200 mb-6"
+            >
               Each product is carefully crafted with premium ingredients, 
               designed to make you feel as luxurious as you look.
             </p>
-            <div className="h-1 w-64 bg-gradient-to-r from-transparent via-amber-300 to-transparent mx-auto mb-8 opacity-0 translate-y-6 transition-all duration-800 ease-out delay-800" data-animate="true"></div>
+            <div 
+              data-animate="true"
+              style={{
+                opacity: 0,
+                transform: 'translateY(24px)',
+                transition: 'all 800ms ease-out',
+                transitionDelay: '800ms'
+              }}
+              className="h-1 w-64 bg-gradient-to-r from-transparent via-amber-300 to-transparent mx-auto mb-8"
+            ></div>
           </div>
         </section>
-
         
-       
-        
-        {/* Newsletter/Booking Section - Updated */}
+        {/* Newsletter/Booking Section */}
         <section 
           ref={newsletterRef}
-          className="py-16 px-4 min-h-screen flex items-center opacity-0 translate-y-12 transition-all duration-1000 ease-out"
+          style={{ 
+            opacity: 0, 
+            transform: 'translateY(48px)',
+            transition: 'all 1000ms ease-out'
+          }}
+          className="py-16 px-4 min-h-screen flex items-center"
         >
           <div className="mb-5 max-w-2xl mx-auto text-center w-full">
-            <div className=" rounded-2xl p-8 bg-gradient-to-r from-black to-gray-900/90 backdrop-blur-sm opacity-0 translate-y-6 transition-all duration-800 ease-out delay-300" data-animate="true">
+            <div 
+              data-animate="true"
+              style={{
+                opacity: 0,
+                transform: 'translateY(24px)',
+                transition: 'all 800ms ease-out',
+                transitionDelay: '300ms'
+              }}
+              className="rounded-2xl p-8 bg-gradient-to-r from-black to-gray-900/90 backdrop-blur-sm"
+            >
               <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r from-amber-600 to-yellow-800 flex items-center justify-center">
                 <Calendar className="w-8 h-8 text-amber-50" />
               </div>
@@ -266,25 +338,44 @@ export default function Home() {
                 A Liora consultant will contact you within 24 hours to confirm your appointment.
               </p>
             </div>
-            <div className="max-w-2xl mx-auto text-center w-full">
-
           </div>
-          </div>
-
         </section>
         
         {/* Footer */}
         <footer 
           ref={footerRef}
-          className="bg-black border-t border-gray-300 py-8 px-4 opacity-0 translate-y-12 transition-all duration-1000 ease-out"
+          style={{ 
+            opacity: 0, 
+            transform: 'translateY(48px)',
+            transition: 'all 1000ms ease-out'
+          }}
+          className="bg-black border-t border-gray-300 py-8 px-4"
         >
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="mb-6 md:mb-0 opacity-0 translate-y-6 transition-all duration-800 ease-out delay-300" data-animate="true">
+              <div 
+                data-animate="true"
+                style={{
+                  opacity: 0,
+                  transform: 'translateY(24px)',
+                  transition: 'all 800ms ease-out',
+                  transitionDelay: '300ms'
+                }}
+                className="mb-6 md:mb-0"
+              >
                 <h2 className="text-3xl font-serif text-amber-100 sm:text-center">LIORA</h2>
                 <p className="text-gray-300 mt-2">Luxury Makeup & Beauty</p>
               </div>
-              <div className="flex gap-6 opacity-0 translate-y-6 transition-all duration-800 ease-out delay-500" data-animate="true">
+              <div 
+                data-animate="true"
+                style={{
+                  opacity: 0,
+                  transform: 'translateY(24px)',
+                  transition: 'all 800ms ease-out',
+                  transitionDelay: '500ms'
+                }}
+                className="flex gap-6"
+              >
                 <a href="#" className="text-gray-300 hover:text-gray-100 transition-colors">        
                   <Instagram size={24} />
                 </a>
@@ -296,12 +387,75 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <div className="text-center mt-8 pt-6 text-amber-300 text-sm opacity-0 translate-y-6 transition-all duration-800 ease-out delay-700" data-animate="true">
+            <div 
+              data-animate="true"
+              style={{
+                opacity: 0,
+                transform: 'translateY(24px)',
+                transition: 'all 800ms ease-out',
+                transitionDelay: '700ms'
+              }}
+              className="text-center mt-8 pt-6 text-amber-300 text-sm"
+            >
               <p>&copy; {new Date().getFullYear()} Liora Luxury Cosmetics. All rights reserved.</p>
             </div>
           </div>
         </footer>
       </main>
+
+      {/* Global animation styles */}
+      <style jsx global>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        /* Smooth scrolling */
+        html {
+          scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+          width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+          background: #000000;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background: linear-gradient(to bottom, #d97706, #92400e);
+          border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(to bottom, #f59e0b, #b45309);
+        }
+        
+        /* Selection color */
+        ::selection {
+          background-color: rgba(180, 83, 9, 0.3);
+          color: #fbbf24;
+        }
+        
+        /* Focus styles */
+        *:focus {
+          outline: 2px solid #f59e0b;
+          outline-offset: 2px;
+        }
+        
+        /* Smooth transitions */
+        .transition-all {
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+      `}</style>
     </>
   );
 }
