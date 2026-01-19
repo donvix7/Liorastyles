@@ -64,7 +64,7 @@ const Hero = () => {
                 <h1 className="text-7xl font-serif mb-4 md:mb-6 leading-tight"
                     style={{animation: 'fadeInUp 1s ease-out 0.2s forwards'}}>
                   <span className="block text-gray-50">Elegance in</span>
-                  <span className="sm:bg-gradient-to-r sm:from-amber-300 sm:via-yellow-200 sm:to-amber-600 text-transparent pb-1" style={{ WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
+                  <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-600 text-transparent pb-1" style={{ WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
                     Black & Gold
                   </span>
                 </h1>
@@ -83,7 +83,8 @@ const Hero = () => {
                 {/* CTA Buttons - Mobile optimized */}
                 <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-8 md:mb-16 justify-center lg:justify-start"
                      style={{animation: 'fadeInUp 1s ease-out 0.6s forwards'}}>
-                  <button className="group relative flex items-center justify-center gap-2 md:gap-2 px-6 py-3 md:px-8 md:py-4 sm:bg-gradient-to-r sm:from-amber-600 sm:to-amber-800 text-amber-50 font-semibold rounded-full transition-all duration-500 transform hover:-translate-y-1 hover:shadow-xl md:hover:shadow-2xl hover:shadow-amber-900/50 overflow-hidden">
+                  <button className=" relative flex items-center justify-center gap-2 md:gap-2 px-6 py-3 md:px-8 md:py-4 sm:bg-gradient-to-r sm:from-amber-600 sm:to-amber-800 text-amber-50 font-semibold rounded-full transition-all duration-500 transform hover:-translate-y-1 hover:shadow-xl md:hover:shadow-2xl hover:shadow-amber-900/50 overflow-hidden">
+                  
                     {/* Shine effect */}
                     <div className="absolute inset-0 translate-x-full group-hover:-translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                     
