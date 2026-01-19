@@ -61,7 +61,7 @@ const Navigation = ({ cartCount, isMenuOpen, setIsMenuOpen }) => {
         <motion.a 
           href="#"
           whileHover={{ x: 8 }}
-          className="group flex items-center text-amber-200 hover:text-amber-50 font-medium transition-all duration-300 py-3 border-b border-amber-900/30"
+          className="group flex items-center text-amber-200 hover:text-amber-50 font-medium transition-all duration-300 py-3 border-b border-gray-500/30"
         >
           <span className="flex items-center gap-3">
             <Package className="w-5 h-5 text-gray-500 hover:text-amber-500" />
@@ -135,7 +135,7 @@ const Navigation = ({ cartCount, isMenuOpen, setIsMenuOpen }) => {
           <a href="#" className="p-2 rounded-full bg-gradient-to-br from-gray-900 to-black border hover:scale-110 transition-all duration-300">
             <Instagram size={18} className="text-gray-300" />
           </a>
-          <a href="#" className="p-2 rounded-full bg-gradient-to-br from-gray-900 to-black border hover:scale-110 transition-all duration-300">
+          <a href="https://www.facebook.com/share/18B2QgMSek/?mibextid=wwXIfr" className="p-2 rounded-full bg-gradient-to-br from-gray-900 to-black border hover:scale-110 transition-all duration-300">
             <Facebook size={18} className="text-gray-300" />
           </a>
           <a href="#" className="p-2 rounded-full bg-gradient-to-br from-gray-900 to-black border hover:scale-110 transition-all duration-300">

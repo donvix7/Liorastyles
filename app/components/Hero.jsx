@@ -61,10 +61,10 @@ const Hero = () => {
                 </div>
                 
                 {/* Main Headline - Responsive sizing */}
-                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-6xl xl:text-8xl font-serif mb-4 md:mb-6 leading-tight"
+                <h1 className="text-7xl font-serif mb-4 md:mb-6 leading-tight"
                     style={{animation: 'fadeInUp 1s ease-out 0.2s forwards'}}>
                   <span className="block text-gray-50">Elegance in</span>
-                  <span className="block bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-300 bg-clip-text text-transparent">
+                  <span className="sm:bg-gradient-to-r sm:from-amber-300 sm:via-yellow-200 sm:to-amber-600 text-transparent pb-1" style={{ WebkitBackgroundClip: 'text', backgroundClip: 'text' }}>
                     Black & Gold
                   </span>
                 </h1>
@@ -83,9 +83,9 @@ const Hero = () => {
                 {/* CTA Buttons - Mobile optimized */}
                 <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-8 md:mb-16 justify-center lg:justify-start"
                      style={{animation: 'fadeInUp 1s ease-out 0.6s forwards'}}>
-                  <button className="group relative flex items-center justify-center gap-2 md:gap-3 px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-amber-600 to-amber-800 text-amber-50 font-semibold rounded-full transition-all duration-500 transform hover:-translate-y-1 hover:shadow-xl md:hover:shadow-2xl hover:shadow-amber-900/50 overflow-hidden">
+                  <button className="group relative flex items-center justify-center gap-2 md:gap-2 px-6 py-3 md:px-8 md:py-4 sm:bg-gradient-to-r sm:from-amber-600 sm:to-amber-800 text-amber-50 font-semibold rounded-full transition-all duration-500 transform hover:-translate-y-1 hover:shadow-xl md:hover:shadow-2xl hover:shadow-amber-900/50 overflow-hidden">
                     {/* Shine effect */}
-                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                    <div className="absolute inset-0 translate-x-full group-hover:-translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                     
                     {/* Gold border glow */}
                     <div className="absolute inset-0 rounded-full border border-amber-500/50 group-hover:border-amber-400/80 transition-colors duration-500"></div>
@@ -114,13 +114,14 @@ const Hero = () => {
                   <div className="hidden lg:block w-px h-24 bg-gradient-to-b from-amber-600/50 to-transparent"></div>
                   
                   <a href="#" className="p-2 rounded-full bg-black/30 backdrop-blur-sm hover:text-amber-300 transition-colors hover:scale-110">
-                    <Instagram size={18} className="md:size-20" />
+                    <Instagram size={20} className="size-12 " />
+                  </a>
+                  <a href="https://www.facebook.com/share/18B2QgMSek/?mibextid=wwXIfr" className="p-2 rounded-full bg-black/30 backdrop-blur-sm hover:text-amber-300 transition-colors hover:scale-110">
+                    <Facebook size={20} className="size-12"/>
                   </a>
                   <a href="#" className="p-2 rounded-full bg-black/30 backdrop-blur-sm hover:text-amber-300 transition-colors hover:scale-110">
-                    <Facebook size={18} className="md:size-20" />
-                  </a>
-                  <a href="#" className="p-2 rounded-full bg-black/30 backdrop-blur-sm hover:text-amber-300 transition-colors hover:scale-110">
-                    <Twitter size={18} className="md:size-20" />
+
+                    <Twitter size={20} className="size-12" />
                   </a>
                   
                   {/* Show divider only on desktop */}
@@ -183,18 +184,7 @@ const Hero = () => {
           50% { transform: translate(-50%, -8px); }
         }
         
-        /* Mobile optimizations */
-        @media (max-width: 640px) {
-          .text-4xl {
-            font-size: 2.25rem;
-            line-height: 2.5rem;
-          }
-          
-          .text-5xl {
-            font-size: 2.5rem;
-            line-height: 2.75rem;
-          }
-        }
+
       `}</style>
     </section>
   );

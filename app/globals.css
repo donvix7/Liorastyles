@@ -142,8 +142,3 @@ html {
 }
 
 /* Responsive gradient adjustments */
-@media (max-width: 768px) {
-  .bg-gradient-to-r {
-    background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
-  }
-}

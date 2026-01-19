@@ -291,9 +291,9 @@ export default function Home() {
             transform: 'translateY(48px)',
             transition: 'all 1000ms ease-out'
           }}
-          className="py-16 px-4 min-h-screen flex items-center"
+          className="py-16 px-4 min-h-screen flex items-center "
         >
-          <div className="mb-5 max-w-2xl mx-auto text-center w-full">
+          <div className="mb-5 max-w-2xl mx-auto text-center w-full border border-gray-500/30">
             <div 
               data-animate="true"
               style={{
