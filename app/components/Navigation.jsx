@@ -1,5 +1,5 @@
 // components/Navigation.js
-import { ShoppingCart, Menu, X, LogIn, ChevronRight, Video, Package, Layers, Info } from 'lucide-react';
+import { ShoppingCart, Menu, X, LogIn, ChevronRight, Video, Package, Layers, Info, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { 
   Instagram,
@@ -20,7 +20,9 @@ const Navigation = ({ cartCount, isMenuOpen, setIsMenuOpen }) => {
             >
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
+            <a href="/">
             <h1 className="text-3xl font-serif text-amber-100 tracking-wider">LIORA</h1>
+            </a>
           </div>
           
           {/* Desktop Navigation */}
@@ -34,7 +36,10 @@ const Navigation = ({ cartCount, isMenuOpen, setIsMenuOpen }) => {
           {/* Cart & User */}
           <div className="flex items-center space-x-6">
             <div className="relative">
-              <ShoppingCart className="text-amber-300 hover:text-amber-100 cursor-pointer transition-colors" size={24} />
+              <a href='/profile'>
+                <User className="text-amber-300 hover:text-amber-100 cursor-pointer transition-colors" size={24} />
+
+              </a>
               {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-amber-600 text-amber-50 text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {cartCount}
@@ -132,7 +137,7 @@ const Navigation = ({ cartCount, isMenuOpen, setIsMenuOpen }) => {
           transition={{ delay: 0.3 }}
           className="flex justify-center gap-6 pt-6 mt-4 border-t border-gray-500/50"
         >
-          <a href="#" className="p-2 rounded-full bg-gradient-to-br from-gray-900 to-black border hover:scale-110 transition-all duration-300">
+          <a href="https://www.instagram.com/ihekauche?igsh=MWttNjNibG44ejJtZg==" className="p-2 rounded-full bg-gradient-to-br from-gray-900 to-black border hover:scale-110 transition-all duration-300">
             <Instagram size={18} className="text-gray-300" />
           </a>
           <a href="https://www.facebook.com/share/18B2QgMSek/?mibextid=wwXIfr" className="p-2 rounded-full bg-gradient-to-br from-gray-900 to-black border hover:scale-110 transition-all duration-300">

@@ -114,7 +114,7 @@ const Hero = () => {
                   {/* Show divider only on desktop */}
                   <div className="hidden lg:block w-px h-24 bg-gradient-to-b from-amber-600/50 to-transparent"></div>
                   
-                  <a href="#" className="p-2 rounded-full bg-black/30 backdrop-blur-sm hover:text-amber-300 transition-colors hover:scale-110">
+                  <a href="https://www.instagram.com/ihekauche?igsh=MWttNjNibG44ejJtZg==" className="p-2 rounded-full bg-black/30 backdrop-blur-sm hover:text-amber-300 transition-colors hover:scale-110">
                     <Instagram size={20} className="size-12 " />
                   </a>
                   <a href="https://www.facebook.com/share/18B2QgMSek/?mibextid=wwXIfr" className="p-2 rounded-full bg-black/30 backdrop-blur-sm hover:text-amber-300 transition-colors hover:scale-110">

@@ -376,7 +376,7 @@ export default function Home() {
                 }}
                 className="flex gap-6"
               >
-                <a href="#" className="text-gray-300 hover:text-gray-100 transition-colors">        
+                <a href="https://www.instagram.com/ihekauche?igsh=MWttNjNibG44ejJtZg==" className="text-gray-300 hover:text-gray-100 transition-colors">        
                   <Instagram size={24} />
                 </a>
                 <a href="https://www.facebook.com/share/18B2QgMSek/?mibextid=wwXIfr" className="text-gray-300 hover:text-gray-100 transition-colors">
