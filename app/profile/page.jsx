@@ -187,6 +187,12 @@ export default function Profile() {
                       {userData.location}
                     </div>
                   )}
+                  {userData.location && (
+                    <div className="flex items-center gap-2">
+                      <MapPin size={16} className="text-amber-500/80" />
+                      {userData.location}
+                    </div>
+                  )}
                   {userData.joinDate && (
                     <div className="flex items-center gap-2">
                       <Calendar size={16} className="text-amber-500/80" />
@@ -231,7 +237,7 @@ export default function Profile() {
             </nav>
 
             {/* Content Area */}
-            <div className="lg:col-span-3 min-h-[500px]">
+            <div className="lg:col-span-3 min-h-[500px] backdrop-blur">
               {activeSection === 'overview' && (
                 <div className="space-y-6 animate-fade-in">
                   <div className="grid sm:grid-cols-2 gap-4">
