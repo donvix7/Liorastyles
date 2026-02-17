@@ -10,6 +10,18 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Liora Brand Colors */
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #78350f;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,6 +36,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
@@ -39,13 +52,14 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d97706;
+  background: linear-gradient(to bottom, #d97706, #92400e);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #b45309;
+  background: linear-gradient(to bottom, #f59e0b, #b45309);
 }
+
 /* Custom scrollbar for mobile menu */
 .mobile-menu-scroll {
   scrollbar-width: thin;
@@ -64,8 +78,10 @@ html {
   background: #d97706;
   border-radius: 2px;
 }
+
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -73,8 +89,19 @@ html {
   }
 }
 
+@keyframes float-small {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 @keyframes float-delayed {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -105,7 +132,8 @@ html {
 }
 
 @keyframes bounce-slow {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -113,8 +141,22 @@ html {
   }
 }
 
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 .animate-float {
   animation: float 8s ease-in-out infinite;
+}
+
+.animate-float-small {
+  animation: float-small 8s ease-in-out infinite;
 }
 
 .animate-float-delayed {
@@ -122,7 +164,7 @@ html {
 }
 
 .animate-fade-in {
-  animation: fade-in 1s ease-out;
+  animation: fade-in 1s ease-out forwards;
 }
 
 .animate-fade-in-up {
@@ -141,4 +183,18 @@ html {
   animation: bounce-slow 2s infinite;
 }
 
-/* Responsive gradient adjustments */
+.animate-pulse-slow {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(180, 83, 9, 0.3);
+  color: #fbbf24;
+}
+
+/* Focus styles */
+*:focus {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}

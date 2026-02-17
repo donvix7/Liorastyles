@@ -14,14 +14,27 @@ const profileSchema = new mongoose.Schema({
         trim: true,
         match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
     },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
+    },
+    socials: {
+        instagram: { type: String, default: "" },
+        facebook: { type: String, default: "" },
+        twitter: { type: String, default: "" },
+        tiktok: { type: String, default: "" }
+    },
     bio: {
+        type: String
+    },
+    aboutMe: {
         type: String
     },
     dateOfBirth: {
         type: Date,
         validate: {
             validator: function(value) {
-                // Ensure date is not in the future
                 return value <= new Date();
             },
             message: 'Date of birth cannot be in the future'
@@ -39,42 +52,51 @@ const profileSchema = new mongoose.Schema({
                 type: String,
                 trim: true,
                 maxlength: [1000, 'Description cannot exceed 1000 characters']
-            },
-          
-          
+            }
         }
-    ],
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now
-    }
+    ]
 }, {
-    timestamps: true, // This automatically manages createdAt and updatedAt
+    timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
 });
 
 const bookingSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: String,
-    role: {
-        type: String,
-        enum: ["user", "admin"],
-        default: "user"
-    }
-});
-const Profile = mongoose.models.Profile || mongoose.model("Profile", profileSchema);
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    serviceId: { type: Number, required: true },
+    status: { type: String, enum: ["pending", "confirmed", "completed", "cancelled"], default: "pending" },
+    date: { type: Date, default: Date.now }
+}, { timestamps: true });
 
-export default Profile;
+const orderSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    role: { type: String, enum: ["user", "admin"], default: "user" }
+}, { timestamps: true });
+
+const contentSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    category: { type: String, enum: ["Tutorial", "News", "Collection"], default: "Tutorial" },
+    description: { type: String },
+    videoUrl: { type: String },
+    imageUrl: { type: String },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' }
+}, { timestamps: true });
+
+const promotionSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    discount: { type: String },
+    expiryDate: { type: Date },
+    imageUrl: { type: String },
+    targetUrl: { type: String },
+    isActive: { type: Boolean, default: true }
+}, { timestamps: true });
+
+const Profile = mongoose.models.Profile || mongoose.model("Profile", profileSchema);
+const Booking = mongoose.models.Booking || mongoose.model("Booking", bookingSchema);
+const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
+const Content = mongoose.models.Content || mongoose.model("Content", contentSchema);
+const Promotion = mongoose.models.Promotion || mongoose.model("Promotion", promotionSchema);
+
+export { Profile, Booking, Order, Content, Promotion };

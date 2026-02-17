@@ -1,156 +1,107 @@
-// components/Navigation.js
-import { ShoppingCart, Menu, X, LogIn, ChevronRight, Video, Package, Layers, Info, User } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { 
-  Instagram,
-  Facebook,
-  Twitter 
-} from 'lucide-react';
+import { useState } from 'react';
+import { Menu, X, Package, Layers, Info, Video, User, ChevronRight, Instagram, Facebook, Twitter } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const Navigation = ({ cartCount, isMenuOpen, setIsMenuOpen }) => {
+const Navigation = ({ cartCount }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuItems = [
+    { name: "Products", icon: Package, href: "#" },
+    { name: "Collections", icon: Layers, href: "#" },
+    { name: "About", icon: Info, href: "/about" },
+    { name: "Tutorials", icon: Video, href: "#" },
+  ];
+
   return (
-    <nav className="sticky top-0 z-50 bg-black/90 backdrop-blur-sm ">
-      <div className="max-w-7xl mx-auto px-4 py-4">
+    <nav className="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/5 shadow-2xl">
+      <div className="max-w-7xl mx-auto px-4 py-3 md:py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
             <button 
-              className="md:hidden mr-4 text-amber-300"
+              className="md:hidden text-amber-400 hover:text-amber-200 p-2 transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle Menu"
             >
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
-            <a href="/">
-            <h1 className="text-3xl font-serif text-amber-100 tracking-wider">LIORA</h1>
+            <a href="/" className="group">
+              <h1 className="text-3xl font-serif text-amber-100 tracking-[0.2em] group-hover:text-amber-400 transition-colors duration-500">LIORA</h1>
             </a>
           </div>
           
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="#" className="flex gap-2 items-center text-amber-300 hover:text-amber-100 font-medium transition-colors"><Package size={24}/>Products</a>
-            <a href="#" className="flex gap-2 items-center text-amber-300 hover:text-amber-100 font-medium transition-colors"><Layers size={24}/>Collections</a>
-            <a href="/about" className="flex gap-2 items-center text-amber-300 hover:text-amber-100 font-medium transition-colors"><Info size={24}/>About</a>
-            <a href="#" className="flex gap-2 items-center text-amber-300 hover:text-amber-100 font-medium transition-colors"><Video size={24}/>Tutorials</a>
+          <div className="hidden md:flex items-center space-x-10">
+            {menuItems.map((item) => (
+              <a 
+                key={item.name}
+                href={item.href} 
+                onClick={() => setIsMenuOpen(false)}
+                className="group flex gap-2 items-center text-amber-300/80 hover:text-amber-200 font-medium tracking-wide transition-all"
+              >
+                <item.icon size={20} className="group-hover:scale-110 transition-transform text-amber-500/60 group-hover:text-amber-400" />
+                {item.name}
+              </a>
+            ))}
           </div>
           
-          {/* Cart & User */}
-          <div className="flex items-center space-x-6">
-            <div className="relative">
-              <a href='/profile'>
-                <User className="text-amber-300 hover:text-amber-100 cursor-pointer transition-colors" size={24} />
-
-              </a>
+          <div className="flex items-center">
+            <motion.a 
+              whileHover={{ scale: 1.1 }}
+              href='/dashboard'
+              className="relative p-2 rounded-full bg-amber-900/10 border border-amber-600/30 text-amber-400 hover:bg-amber-900/20 hover:text-amber-200 transition-all"
+            >
+              <User size={22} />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-amber-600 text-amber-50 text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-linear-to-r from-amber-600 to-amber-800 text-amber-50 text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg animate-bounce-slow">
                   {cartCount}
                 </span>
               )}
-            </div>
-            
+            </motion.a>
           </div>
         </div>
         
-        {/* Mobile Menu */}
-{/* Mobile Menu */}
-{isMenuOpen && (
-  <motion.div 
-    initial={{ opacity: 0, height: 0 }}
-    animate={{ opacity: 1, height: "auto" }}
-    exit={{ opacity: 0, height: 0 }}
-    transition={{ duration: 0.3, ease: "easeInOut" }}
-    className="md:hidden overflow-hidden"
-  >
-    <div className="mt-4 pb-6 pt-6 border-t border-gray-500/50 bg-gradient-to-b from-black to-gray-900/90 backdrop-blur-sm">
-      <div className="flex flex-col space-y-5 px-4">
-        {/* Menu items with hover effects */}
-        <motion.a 
-          href="#"
-          whileHover={{ x: 8 }}
-          className="group flex items-center text-amber-200 hover:text-amber-50 font-medium transition-all duration-300 py-3 border-b border-gray-500/30"
-        >
-          <span className="flex items-center gap-3">
-            <Package className="w-5 h-5 text-gray-500 hover:text-amber-500" />
-            Products
-          </span>
-          <ChevronRight className="ml-auto w-4 h-4 text-gray-700 group-hover:text-amber-500 transition-colors duration-300" />
-        </motion.a>
-
-        <motion.a 
-          href="#"
-          whileHover={{ x: 8 }}
-          className="group flex items-center text-amber-200 hover:text-amber-50 font-medium transition-all duration-300 py-3 border-b border-gray-500/30"
-        >
-          <span className="flex items-center gap-3">
-            <Layers className="w-5 h-5 text-gray-500 hover:text-amber-500" />
-            Collections
-          </span>
-          <ChevronRight className="ml-auto w-4 h-4 text-gray-700 group-hover:text-amber-500 transition-colors duration-300" />
-        </motion.a>
-
-        <motion.a 
-          href="#"
-          whileHover={{ x: 8 }}
-          className="group flex items-center text-amber-200 hover:text-amber-50 font-medium transition-all duration-300 py-3 border-b border-gray-500/30"
-        >
-          <span className="flex items-center gap-3">
-            <Info className="w-5 h-5 text-gray-500 hover:text-amber-500" />
-            About
-          </span>
-          <ChevronRight className="ml-auto w-4 h-4 text-gray-700 group-hover:text-amber-500 transition-colors duration-300" />
-
-        </motion.a>
-
-        <motion.a 
-          href="#"
-          whileHover={{ x: 8 }}
-          className="group flex items-center text-amber-200 hover:text-amber-50 font-medium transition-all duration-300 py-3 border-b border-gray-500/30"
-        >
-          <span className="flex items-center gap-3">
-            <Video className="w-5 h-5 text-gray-500 hover:text-amber-500" />
-            Tutorials
-          </span>
-          <ChevronRight className="ml-auto w-4 h-4 text-gray-700 group-hover:text-amber-500 transition-colors duration-300" />
-        </motion.a>
-
-        {/* Sign In Button with enhanced effect */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="pt-4 mt-2"
-        >
-
-
-          {/* Alternative sign up link */}
-          <p className="text-center mt-4 text-amber-400/80 text-sm">
-            New to Liora?{' '}
-            <a href="#" className="text-amber-300 hover:text-amber-200 font-medium underline underline-offset-2 transition-colors duration-300">
-              Book a session with us
-            </a>
-          </p>
-        </motion.div>
-
-        {/* Social links at bottom */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="flex justify-center gap-6 pt-6 mt-4 border-t border-gray-500/50"
-        >
-          <a href="https://www.instagram.com/ihekauche?igsh=MWttNjNibG44ejJtZg==" className="p-2 rounded-full bg-gradient-to-br from-gray-900 to-black border hover:scale-110 transition-all duration-300">
-            <Instagram size={18} className="text-gray-300" />
-          </a>
-          <a href="https://www.facebook.com/share/18B2QgMSek/?mibextid=wwXIfr" className="p-2 rounded-full bg-gradient-to-br from-gray-900 to-black border hover:scale-110 transition-all duration-300">
-            <Facebook size={18} className="text-gray-300" />
-          </a>
-          <a href="#" className="p-2 rounded-full bg-gradient-to-br from-gray-900 to-black border hover:scale-110 transition-all duration-300">
-            <Twitter size={18} className="text-gray-300" />
-          </a>
-        </motion.div>
-      </div>
-    </div>
-  </motion.div>
-)}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div 
+              initial={{ opacity: 0, height: 0, y: -20 }}
+              animate={{ opacity: 1, height: "auto", y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="md:hidden overflow-hidden border-t border-white/5 mt-4"
+            >
+              <div className="py-8 flex flex-col space-y-2">
+                {menuItems.map((item, i) => (
+                  <motion.a 
+                    key={item.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="group flex items-center justify-between px-4 py-4 rounded-xl hover:bg-amber-900/10 transition-colors text-amber-100/90 font-medium"
+                  >
+                    <span className="flex items-center gap-4">
+                      <item.icon size={20} className="text-amber-500/50 group-hover:text-amber-400" />
+                      {item.name}
+                    </span>
+                    <ChevronRight size={18} className="text-amber-900/40 group-hover:text-amber-500 transition-colors" />
+                  </motion.a>
+                ))}
+                
+                <div className="pt-8 mt-4 border-t border-white/5 flex justify-center gap-8">
+                  {[Instagram, Facebook, Twitter].map((Icon, i) => (
+                    <motion.a 
+                      key={i}
+                      whileHover={{ scale: 1.2 }}
+                      href="#" 
+                      className="p-3 rounded-full bg-amber-900/5 border border-amber-600/20 text-amber-400/70"
+                    >
+                      <Icon size={20} />
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );
