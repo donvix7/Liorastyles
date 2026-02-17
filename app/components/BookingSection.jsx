@@ -21,9 +21,9 @@ export default function BookingSection({ newsletterRef }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="rounded-2xl p-8 bg-gradient-to-r from-black to-gray-900/90 backdrop-blur-sm"
+          className="rounded-2xl p-8 bg-linear-to-r from-black to-gray-900/90 backdrop-blur-sm"
         >
-          <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r from-amber-600 to-yellow-800 flex items-center justify-center">
+          <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-linear-to-r from-amber-600 to-yellow-800 flex items-center justify-center">
             <Calendar className="w-8 h-8 text-amber-50" />
           </div>
           <h3 className="text-3xl font-serif mb-4">Book Your Transformation</h3>

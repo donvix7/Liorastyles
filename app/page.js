@@ -7,7 +7,7 @@ import Hero from './components/Hero';
 import ServiceCard from './components/ServiceCard';
 import AboutSection from './components/AboutSection';
 import BookingSection from './components/BookingSection';
-import Footer from './components/Footer';
+import Footer from './components/Footer.jsx';
 import { makeupServices } from './utils/data';
 import { motion } from 'framer-motion';
 

@@ -139,7 +139,7 @@ export default function Dashboard() {
         {/* Header Section */}
         <div className="relative overflow-hidden rounded-3xl bg-neutral-900/40 backdrop-blur-xl border border-neutral-800/50 p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left transition-all hover:bg-neutral-900/50">
           <div className="relative shrink-0">
-            <div className={`w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br ${userData.avatarColor} ring-4 ring-black flex items-center justify-center`}>
+            <div className={`w-32 h-32 md:w-40 md:h-40 rounded-full bg-linear-to-br ${userData.avatarColor} ring-4 ring-black flex items-center justify-center`}>
               <User size={64} className="text-white" />
             </div>
             <button onClick={() => setIsEditModalOpen(true)} className="absolute bottom-1 right-1 p-2.5 bg-neutral-900 border border-neutral-700 rounded-full text-amber-400 hover:bg-neutral-800 transition-all shadow-lg">
@@ -325,7 +325,7 @@ export default function Dashboard() {
 
       {/* Shared Edit Profile Modal */}
       {isEditModalOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-100 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-2xl bg-neutral-900 border border-neutral-800 rounded-3xl overflow-hidden max-h-[90vh] flex flex-col">
             <div className="p-6 border-b border-neutral-800 flex justify-between items-center bg-neutral-900">
               <h2 className="text-xl font-serif">Settings</h2>
@@ -461,7 +461,7 @@ function EmptyState({ icon: Icon, message }) {
 
 function Modal({ title, children, onClose }) {
   return (
-    <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-100 bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
       <div className="w-full max-w-xl bg-neutral-900 border border-neutral-800 rounded-3xl overflow-hidden animate-fade-in shadow-2xl">
         <div className="p-6 border-b border-neutral-800 flex justify-between items-center">
           <h2 className="text-xl font-serif">{title}</h2>

@@ -41,10 +41,10 @@ export default function ServiceCard({ service, addToCart, index }) {
           <span className="text-sm tracking-wide">{service.duration}</span>
         </div>
         
-        <ul className="space-y-2 mb-8 flex-grow">
+        <ul className="space-y-2 mb-8 grow">
           {service.features.map((feature, i) => (
             <li key={i} className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
               <span className="text-sm text-gray-300 group-hover:text-amber-50/80 transition-colors">{feature}</span>
             </li>
           ))}

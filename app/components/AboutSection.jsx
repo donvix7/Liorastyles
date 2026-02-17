@@ -28,7 +28,7 @@ export default function AboutSection({ aboutRef }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="h-1 w-64 bg-gradient-to-r from-transparent via-amber-300 to-transparent mx-auto mb-8"
+          className="h-1 w-64 bg-linear-to-r from-transparent via-amber-300 to-transparent mx-auto mb-8"
         ></motion.div>
         <motion.p 
           initial={{ opacity: 0, y: 24 }}
@@ -56,7 +56,7 @@ export default function AboutSection({ aboutRef }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="h-1 w-64 bg-gradient-to-r from-transparent via-amber-300 to-transparent mx-auto mb-8"
+          className="h-1 w-64 bg-linear-to-r from-transparent via-amber-300 to-transparent mx-auto mb-8"
         ></motion.div>
       </motion.div>
     </section>
