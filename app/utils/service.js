@@ -203,3 +203,36 @@ export async function updateBookingStatus(id, status) {
         return { success: false, error: error.message };
     }
 }
+
+export async function changePassword(id, currentPassword, newPassword) {
+    try {
+        const res = await fetch(`${API_URL}/profile/change-password`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, currentPassword, newPassword })
+        });
+        const data = await res.json();
+        return res.ok ? { success: true } : { success: false, error: data.error };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function logout() {
+    try {
+        const res = await fetch(`${API_URL}/auth/logout`, { method: "POST" });
+        return res.ok;
+    } catch (error) {
+        return false;
+    }
+}
+
+export async function checkSession() {
+    try {
+        const res = await fetch(`${API_URL}/auth/me`);
+        const data = await res.json();
+        return res.ok ? { success: true, data: data.data } : { success: false };
+    } catch (error) {
+        return { success: false };
+    }
+}

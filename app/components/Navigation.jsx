@@ -1,9 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, Package, Layers, Info, Video, User, ChevronRight, Instagram, Facebook } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useCookies } from 'react-cookie';
 
 const Navigation = ({ cartCount }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [cookies] = useCookies(['liora_session']);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if session cookie exists
+    setIsLoggedIn(!!cookies.liora_session);
+  }, [cookies.liora_session]);
   const menuItems = [
     { name: "Products", icon: Package, href: "#" },
     { name: "Collections", icon: Layers, href: "#" },
@@ -43,18 +51,20 @@ const Navigation = ({ cartCount }) => {
           </div>
           
           <div className="flex items-center">
-            <motion.a 
-              whileHover={{ scale: 1.1 }}
-              href='/dashboard'
-              className="relative p-2 rounded-full bg-neutral-900 border border-amber-600/30 text-amber-400 hover:bg-neutral-800 hover:text-amber-200 transition-all"
-            >
-              <User size={22} />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-linear-to-r from-amber-600 to-amber-800 text-amber-50 text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg animate-bounce-slow">
-                  {cartCount}
-                </span>
-              )}
-            </motion.a>
+            {isLoggedIn && (
+              <motion.a 
+                whileHover={{ scale: 1.1 }}
+                href='/dashboard'
+                className="relative p-2 rounded-full bg-neutral-900 border border-amber-600/30 text-amber-400 hover:bg-neutral-800 hover:text-amber-200 transition-all"
+              >
+                <User size={22} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-linear-to-r from-amber-600 to-amber-800 text-amber-50 text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg animate-bounce-slow">
+                    {cartCount}
+                  </span>
+                )}
+              </motion.a>
+            )}
           </div>
         </div>
         

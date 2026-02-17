@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import connectDB from "../../utils/mongodb";
 import { Booking } from "../../../models/profile";
 
 export const GET = async () => {
     try {
+        const cookieStore = await cookies();
+        if (!cookieStore.get("liora_session")) {
+            return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+        }
+
         await connectDB();
         const bookings = await Booking.find().sort({ createdAt: -1 });
         return NextResponse.json({ success: true, data: bookings });
@@ -14,9 +20,14 @@ export const GET = async () => {
 
 export const POST = async (req) => {
     try {
+        const cookieStore = await cookies();
+        if (!cookieStore.get("liora_session")) {
+            return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+        }
+        
         await connectDB();
-        const data = await req.json();
-        const booking = await Booking.create(data);
+        const body = await req.json();
+        const booking = await Booking.create(body);
         return NextResponse.json({ success: true, data: booking }, { status: 201 });
     } catch (error) {
         return NextResponse.json({ success: false, error: error.message }, { status: 500 });

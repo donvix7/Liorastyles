@@ -1,9 +1,15 @@
 import connectDB from "@/app/utils/mongodb";
-import { Content, Promotion, Profile } from "@/models/profile";
+import { Content, Promotion } from "@/models/profile";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 export const GET = async (req) => {
     try {
+        const cookieStore = await cookies();
+        if (!cookieStore.get("liora_session")) {
+            return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+        }
+
         await connectDB();
         const contents = await Content.find({}).sort({ createdAt: -1 });
         const promotions = await Promotion.find({}).sort({ createdAt: -1 });
@@ -19,6 +25,11 @@ export const GET = async (req) => {
 
 export const POST = async (req) => {
     try {
+        const cookieStore = await cookies();
+        if (!cookieStore.get("liora_session")) {
+            return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+        }
+
         await connectDB();
         const { type, ...data } = await req.json();
 

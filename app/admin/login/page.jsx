@@ -25,8 +25,6 @@ export default function AdminLogin() {
       const result = await res.json();
 
       if (result.success) {
-        // Store user in localStorage (simple auth for this demo)
-        localStorage.setItem('liora_user', JSON.stringify(result.data));
         window.location.href = '/dashboard';
       } else {
         setError(result.error || 'Login failed. Please check your credentials.');
@@ -44,7 +42,6 @@ export default function AdminLogin() {
         <title>Admin Login | LIORA</title>
       </Head>
       
-      <Navigation />
 
       <main className="relative flex items-center justify-center pt-32 pb-20 px-4">
         {/* Background glow effects */}

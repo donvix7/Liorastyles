@@ -8,7 +8,11 @@ import {
   ShoppingBag, Megaphone, Video, Globe, Smartphone, Music, 
   Instagram, Facebook, LogOut, Layers
 } from 'lucide-react';
-import { fetchProfile, fetchDashboard, updateProfile, addDashboardItem, fetchOrders, fetchServices, saveService, deleteService, fetchBookings, updateBookingStatus } from '../utils/service';
+import { 
+  fetchProfile, fetchDashboard, updateProfile, addDashboardItem, 
+  fetchOrders, fetchServices, saveService, deleteService, 
+  fetchBookings, updateBookingStatus, changePassword, logout, checkSession 
+} from '../utils/service';
 
 export default function Dashboard() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -41,6 +45,9 @@ export default function Dashboard() {
   const [services, setServices] = useState([]);
   const [orders, setOrders] = useState([]);
   const [bookings, setBookings] = useState([]);
+  
+  const [passwordForm, setPasswordForm] = useState({ current: "", new: "", confirm: "" });
+  const [passwordStatus, setPasswordStatus] = useState({ type: "", message: "" });
 
 
   const fetchData = async () => {
@@ -48,11 +55,19 @@ export default function Dashboard() {
       setIsFetching(true);
       setError(null);
 
+      // Verify session and get user data
+      const sessionResult = await checkSession();
+      if (!sessionResult.success) {
+        window.location.href = '/admin/login';
+        return;
+      }
+
+      const userId = sessionResult.data.id;
+      
       // Parallel fetch for better performance
-      const [id] = ["69709ceb0841a926ad18e444"];
       const [profileResult, ordersResult] = await Promise.all([
-        fetchProfile(id),
-        fetchOrders()
+        fetchProfile(userId),
+        fetchOrders(userId)
       ]);
       
       if (!profileResult.success) throw new Error(profileResult.error || "Failed to fetch profile");
@@ -91,6 +106,33 @@ export default function Dashboard() {
       }
     } catch (err) {
       console.error("Update status error:", err);
+    }
+  };
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    setPasswordStatus({ type: "", message: "" });
+
+    if (passwordForm.new !== passwordForm.confirm) {
+        return setPasswordStatus({ type: "error", message: "New passwords do not match" });
+    }
+    if (passwordForm.new.length < 6) {
+        return setPasswordStatus({ type: "error", message: "Password must be at least 6 characters" });
+    }
+
+    setIsLoading(true);
+    try {
+        const result = await changePassword(userData._id, passwordForm.current, passwordForm.new);
+        if (result.success) {
+            setPasswordStatus({ type: "success", message: "Password updated successfully" });
+            setPasswordForm({ current: "", new: "", confirm: "" });
+        } else {
+            setPasswordStatus({ type: "error", message: result.error || "Failed to update password" });
+        }
+    } catch (err) {
+        setPasswordStatus({ type: "error", message: "An unexpected error occurred" });
+    } finally {
+        setIsLoading(false);
     }
   };
 
@@ -205,7 +247,8 @@ export default function Dashboard() {
             ))}
             
             <button 
-              onClick={() => {
+              onClick={async () => {
+                await logout();
                 localStorage.removeItem('liora_user');
                 window.location.href = '/admin/login';
               }} 
@@ -226,16 +269,19 @@ export default function Dashboard() {
             {error && <div className="p-4 bg-red-900/20 border border-red-500/50 rounded-xl text-red-400 text-sm flex items-center gap-3"> <X className="cursor-pointer" onClick={() => setError(null)} size={16} /> {error} </div>}
             
             {activeSection === 'overview' && (
-              <div className="space-y-8">
-                <div className="grid sm:grid-cols-3 gap-6">
+              <div className="space-y-8  bg-black pt-10">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                    {[
-                    { label: 'Purchases', val: orders.length, icon: Package },
-                    { label: 'Active Ads', val: dashboardData.promotions.length, icon: Megaphone }
+                    { label: 'Purchases', val: orders.length, icon: ShoppingBag },
+                    { label: 'Bookings', val: bookings.length, icon: Calendar },
+                    { label: 'Services', val: services.length, icon: Crown },
+                    { label: 'Contents', val: dashboardData.contents.length, icon: Layers },
+                    { label: 'Promotions', val: dashboardData.promotions.length, icon: Megaphone }
                   ].map((stat, i) => (
-                    <div key={i} className="p-8 rounded-3xl bg-neutral-900 border border-neutral-800 hover:bg-neutral-800 transition-all hover:scale-[1.02] cursor-default shadow-lg">
-                      <stat.icon className="text-amber-500/70 mb-4" size={24} />
-                      <div className="text-neutral-500 text-sm">{stat.label}</div>
-                      <div className="text-3xl font-serif text-white mt-1">{stat.val}</div>
+                    <div key={i} className="p-6 rounded-2xl bg-neutral-900 border border-neutral-800 hover:bg-neutral-800 transition-all hover:scale-[1.02] cursor-default shadow-lg">
+                      <stat.icon className="text-amber-500/70 mb-3" size={20} />
+                      <div className="text-neutral-400 text-xs font-medium uppercase tracking-wider">{stat.label}</div>
+                      <div className="text-2xl font-serif text-white mt-1">{stat.val}</div>
                     </div>
                   ))}
                 </div>
@@ -262,7 +308,7 @@ export default function Dashboard() {
             )}
 
             {activeSection === 'management' && (
-              <div className="space-y-6">
+              <div className="space-y-6  bg-black pt-10">
                 <div className="flex justify-between items-center">
                   <h3 className="text-2xl font-serif">Content Library</h3>
                   <button onClick={() => setIsAddContentModalOpen(true)} className="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-full flex items-center gap-2 text-sm font-bold shadow-lg shadow-amber-900/40">
@@ -291,7 +337,7 @@ export default function Dashboard() {
             )}
 
             {activeSection === 'services' && (
-              <div className="space-y-6 bg-neutral-900/50 backdrop-blur-sm">
+              <div className="space-y-6 bg-black pt-10">
                 <div className="flex justify-between items-center">
                   <h3 className="text-2xl font-serif">Service Management</h3>
                   <button onClick={() => { setSelectedService(null); setIsAddServiceModalOpen(true); }} className="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-full flex items-center gap-2 text-sm font-bold shadow-lg shadow-amber-900/40 transition-all">
@@ -329,7 +375,7 @@ export default function Dashboard() {
               </div>
             )}
             {activeSection === 'bookings' && (
-              <div className="space-y-6">
+              <div className="space-y-6  bg-black pt-10">
                 <div className="flex justify-between items-center">
                   <h3 className="text-2xl font-serif">Service Bookings</h3>
                   <div className="text-sm text-neutral-500">{bookings.length} Total Requests</div>
@@ -386,7 +432,7 @@ export default function Dashboard() {
             )}
 
             {activeSection === 'promotions' && (
-              <div className="space-y-6">
+              <div className="space-y-6  bg-black pt-10">
                 <div className="flex justify-between items-center">
                   <h3 className="text-2xl font-serif">Promotion Banners</h3>
                   <button onClick={() => setIsAddPromotionModalOpen(true)} className="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-full flex items-center gap-2 text-sm font-bold shadow-lg shadow-amber-900/40">
@@ -418,7 +464,7 @@ export default function Dashboard() {
             )}
 
             {activeSection === 'orders' && (
-              <div className="space-y-6">
+              <div className="space-y-6  bg-black pt-10">
                 <h3 className="text-2xl font-serif">Purchase History</h3>
                 <div className="grid gap-4">
                   {orders.length > 0 ? (
@@ -533,6 +579,60 @@ export default function Dashboard() {
                   {(!editFormData.achievements || editFormData.achievements.length === 0) && (
                     <p className="text-xs text-neutral-600 italic">No achievements added. These will appear on the About page.</p>
                   )}
+                </div>
+              </div>
+
+              {/* Security section */}
+              <div className="space-y-4 pt-4 border-t border-neutral-800">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-bold text-amber-500 uppercase">Security & Password</span>
+                </div>
+                <div className="p-6 rounded-2xl bg-black/40 border border-neutral-800/50 space-y-6">
+                  {passwordStatus.message && (
+                    <div className={`p-3 rounded-xl text-sm flex items-center gap-2 ${passwordStatus.type === 'success' ? 'bg-emerald-950/30 text-emerald-400 border border-emerald-500/20' : 'bg-red-950/30 text-red-400 border border-red-500/20'}`}>
+                      {passwordStatus.message}
+                    </div>
+                  )}
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <label className="text-xs text-neutral-500 uppercase font-bold tracking-wider">Current Password</label>
+                        <input 
+                            type="password"
+                            placeholder="••••••••"
+                            value={passwordForm.current}
+                            onChange={(e) => setPasswordForm(p => ({ ...p, current: e.target.value }))}
+                            className="w-full bg-neutral-900 border border-neutral-700/50 rounded-xl px-4 py-2 text-white focus:border-amber-500/50 outline-none"
+                        />
+                    </div>
+                    <div className="hidden sm:block"></div>
+                    <div className="space-y-2">
+                        <label className="text-xs text-neutral-500 uppercase font-bold tracking-wider">New Password</label>
+                        <input 
+                            type="password"
+                            placeholder="Min. 6 characters"
+                            value={passwordForm.new}
+                            onChange={(e) => setPasswordForm(p => ({ ...p, new: e.target.value }))}
+                            className="w-full bg-neutral-900 border border-neutral-700/50 rounded-xl px-4 py-2 text-white focus:border-amber-500/50 outline-none"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-xs text-neutral-500 uppercase font-bold tracking-wider">Confirm New Password</label>
+                        <input 
+                            type="password"
+                            placeholder="Re-type password"
+                            value={passwordForm.confirm}
+                            onChange={(e) => setPasswordForm(p => ({ ...p, confirm: e.target.value }))}
+                            className="w-full bg-neutral-900 border border-neutral-700/50 rounded-xl px-4 py-2 text-white focus:border-amber-500/50 outline-none"
+                        />
+                    </div>
+                  </div>
+                  <button 
+                    onClick={handleChangePassword}
+                    disabled={isLoading || !passwordForm.current || !passwordForm.new}
+                    className="w-full sm:w-auto px-6 py-2 rounded-full bg-neutral-800 text-amber-400 text-sm font-bold border border-amber-600/20 hover:bg-neutral-700 transition-all disabled:opacity-50"
+                  >
+                    Update Password
+                  </button>
                 </div>
               </div>
             </div>

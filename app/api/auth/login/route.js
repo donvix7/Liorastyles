@@ -1,6 +1,7 @@
 import connectDB from "@/app/utils/mongodb";
 import { Profile } from "@/models/profile";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
 
 export const POST = async (req) => {
@@ -31,6 +32,16 @@ export const POST = async (req) => {
             email: user.email,
             role: user.role
         };
+
+        // Set session cookie
+        const cookieStore = await cookies();
+        cookieStore.set("liora_session", JSON.stringify(userData), {
+            httpOnly: false, // Set to false so react-cookie can read it
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 60 * 60 * 24 * 7, // 1 week
+            path: "/",
+        });
 
         return NextResponse.json({ success: true, data: userData });
     } catch (error) {

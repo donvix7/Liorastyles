@@ -1,11 +1,18 @@
 import connectDB from "@/app/utils/mongodb";
 import { Profile } from "@/models/profile";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import mongoose from "mongoose";
 
 export const GET = async (req, { params }) => {
     try {
         const { id } = await params;
+        const cookieStore = await cookies();
+        const session = cookieStore.get("liora_session");
+
+        if (!session) {
+            return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+        }
 
         // Validate ObjectId
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -38,6 +45,12 @@ export const GET = async (req, { params }) => {
 export const PUT = async (req, { params }) => {
     try {
         const { id } = await params;
+        const cookieStore = await cookies();
+        const session = cookieStore.get("liora_session");
+
+        if (!session) {
+            return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+        }
         
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return NextResponse.json(
