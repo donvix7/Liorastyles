@@ -2,13 +2,13 @@
 
 import Head from 'next/head';
 import { useState, useRef } from 'react';
-import Navigation from './components/Navigation';
-import Hero from './components/Hero';
-import ServiceCard from './components/ServiceCard';
-import AboutSection from './components/AboutSection';
-import BookingSection from './components/BookingSection';
-import Footer from './components/Footer.jsx';
-import { makeupServices } from './utils/data';
+import Navigation from '@/app/components/Navigation';
+import Hero from '@/app/components/Hero';
+import ServiceCard from '@/app/components/ServiceCard';
+import AboutSection from '@/app/components/AboutSection';
+import BookingSection from '@/app/components/BookingSection';
+import Footer from '@/app/components/Footer';
+import { makeupServices } from '@/app/utils/data';
 import { motion } from 'framer-motion';
 
 export default function Home() {
