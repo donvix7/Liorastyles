@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Package, Layers, Info, Video, User, ChevronRight, Instagram, Facebook, Twitter } from 'lucide-react';
+import { Menu, X, Package, Layers, Info, Video, User, ChevronRight, Instagram, Facebook } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navigation = ({ cartCount }) => {
@@ -12,7 +12,7 @@ const Navigation = ({ cartCount }) => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/5 shadow-2xl">
+    <nav className="sticky top-0 z-50 bg-black border-b border-white/5 shadow-2xl">
       <div className="max-w-7xl mx-auto px-4 py-3 md:py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -46,7 +46,7 @@ const Navigation = ({ cartCount }) => {
             <motion.a 
               whileHover={{ scale: 1.1 }}
               href='/dashboard'
-              className="relative p-2 rounded-full bg-amber-900/10 border border-amber-600/30 text-amber-400 hover:bg-amber-900/20 hover:text-amber-200 transition-all"
+              className="relative p-2 rounded-full bg-neutral-900 border border-amber-600/30 text-amber-400 hover:bg-neutral-800 hover:text-amber-200 transition-all"
             >
               <User size={22} />
               {cartCount > 0 && (
@@ -76,7 +76,7 @@ const Navigation = ({ cartCount }) => {
                     transition={{ delay: i * 0.1 }}
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className="group flex items-center justify-between px-4 py-4 rounded-xl hover:bg-amber-900/10 transition-colors text-amber-100/90 font-medium"
+                    className="group flex items-center justify-between px-4 py-4 rounded-xl hover:bg-neutral-900 transition-colors text-amber-100/90 font-medium"
                   >
                     <span className="flex items-center gap-4">
                       <item.icon size={20} className="text-amber-500/50 group-hover:text-amber-400" />
@@ -87,14 +87,28 @@ const Navigation = ({ cartCount }) => {
                 ))}
                 
                 <div className="pt-8 mt-4 border-t border-white/5 flex justify-center gap-8">
-                  {[Instagram, Facebook, Twitter].map((Icon, i) => (
+                  {[
+                    { Icon: Instagram, href: "#" },
+                    { Icon: Facebook, href: "#" },
+                    { 
+                      isX: true, 
+                      href: "#" 
+                    }
+                  ].map((social, i) => (
                     <motion.a 
                       key={i}
                       whileHover={{ scale: 1.2 }}
-                      href="#" 
-                      className="p-3 rounded-full bg-amber-900/5 border border-amber-600/20 text-amber-400/70"
+                      href={social.href} 
+                      className="p-3 rounded-full bg-neutral-900 border border-amber-600/20 text-amber-400/70 flex items-center justify-center"
+                      aria-label={social.isX ? "X (formerly Twitter)" : ""}
                     >
-                      <Icon size={20} />
+                      {social.isX ? (
+                        <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
+                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                      ) : (
+                        <social.Icon size={20} />
+                      )}
                     </motion.a>
                   ))}
                 </div>

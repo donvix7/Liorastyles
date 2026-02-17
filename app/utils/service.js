@@ -39,24 +39,6 @@ export async function fetchDashboard() {
     }
 }
 
-export async function fetchBookings() {
-    try {
-        const res = await fetch(`${API_URL}/bookings`);
-        const data = await res.json();
-        
-        if (!res.ok) {
-            return { 
-                success: false, 
-                error: data.error || `Failed to fetch bookings: ${res.statusText}`,
-                status: res.status 
-            };
-        }
-        
-        return { success: true, data: data.data || data };
-    } catch (error) {
-        return { success: false, error: "Network error fetching bookings: " + error.message };
-    }
-}
 
 export async function fetchOrders() {
     try {
@@ -160,5 +142,64 @@ export async function addDashboardItem(type, itemData) {
         return { success: true, data: data.data || data };
     } catch (error) {
         return { success: false, error: "Network error adding dashboard item: " + error.message };
+    }
+}
+export async function fetchServices() {
+    try {
+        const res = await fetch("/api/services");
+        const data = await res.json();
+        return res.ok ? { success: true, data: data.data } : { success: false, error: data.error };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function saveService(serviceData) {
+    try {
+        const res = await fetch("/api/services", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(serviceData)
+        });
+        const data = await res.json();
+        return res.ok ? { success: true, data: data.data } : { success: false, error: data.error };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function deleteService(id) {
+    try {
+        const res = await fetch(`/api/services?id=${id}`, {
+            method: 'DELETE'
+        });
+        const data = await res.json();
+        return res.ok ? { success: true } : { success: false, error: data.error };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function fetchBookings() {
+    try {
+        const res = await fetch('/api/bookings');
+        const data = await res.json();
+        return res.ok ? { success: true, data: data.data } : { success: false, error: data.error };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function updateBookingStatus(id, status) {
+    try {
+        const res = await fetch('/api/bookings', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, status })
+        });
+        const data = await res.json();
+        return res.ok ? { success: true, data: data.data } : { success: false, error: data.error };
+    } catch (error) {
+        return { success: false, error: error.message };
     }
 }

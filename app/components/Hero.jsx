@@ -1,5 +1,5 @@
 "use client"
-import { Eye, Instagram, Facebook, Twitter, FileStack } from 'lucide-react';
+import { Eye, Instagram, Facebook, FileStack } from 'lucide-react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -108,14 +108,25 @@ const Hero = () => {
                 <div className="flex lg:flex-col justify-center gap-6 items-center">
                   <div className="hidden lg:block w-px h-24 bg-linear-to-b from-amber-600/50 to-transparent"></div>
                   
-                  {[Instagram, Facebook, Twitter].map((Icon, i) => (
+                  {[
+                    { Icon: Instagram, href: "#" },
+                    { Icon: Facebook, href: "#" },
+                    { isX: true, href: "#" }
+                  ].map((social, i) => (
                     <motion.a 
                       key={i}
                       whileHover={{ scale: 1.2, color: '#fcd34d' }}
-                      href="#" 
-                      className="p-3 rounded-full bg-black/40 border border-gray-800 text-amber-500/80 transition-shadow hover:shadow-[0_0_15px_rgba(245,158,11,0.2)]"
+                      href={social.href} 
+                      className="p-3 rounded-full bg-black/40 border border-gray-800 text-amber-500/80 transition-shadow hover:shadow-[0_0_15px_rgba(245,158,11,0.2)] flex items-center justify-center"
+                      aria-label={social.isX ? "X (formerly Twitter)" : ""}
                     >
-                      <Icon size={24} />
+                      {social.isX ? (
+                        <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
+                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                      ) : (
+                        <social.Icon size={24} />
+                      )}
                     </motion.a>
                   ))}
                   

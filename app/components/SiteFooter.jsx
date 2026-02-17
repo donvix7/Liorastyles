@@ -1,8 +1,8 @@
 "use client"
 import { motion } from 'framer-motion';
-import { Facebook, Instagram } from 'lucide-react';
+import { Facebook, Instagram, X } from 'lucide-react';
 
-const Footer = ({ footerRef }) => {
+const SiteFooter = ({ footerRef }) => {
   return (
     <footer 
       ref={footerRef}
@@ -62,4 +62,4 @@ const Footer = ({ footerRef }) => {
   );
 };
 
-export default Footer;
+export default SiteFooter;

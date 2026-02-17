@@ -2,7 +2,7 @@
 // pages/about.js
 import Head from 'next/head';
 import Navigation from '../components/Navigation';
-import { Crown, Sparkles, Heart, Users, Award, Globe, Instagram, Facebook, Twitter, User, Loader2 } from 'lucide-react';
+import { Crown, Sparkles, Heart, Users, Award, Globe, Instagram, Facebook, X , User, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { fetchProfile } from '../utils/service';
 
@@ -231,7 +231,7 @@ export default function About() {
                         <button className="px-8 py-3 bg-amber-600 text-white font-bold rounded-full hover:bg-amber-500 transition-all shadow-lg shadow-amber-900/30">Connect</button>
                         <div className="flex items-center gap-4 text-neutral-500 px-4">
                           {adminProfile.socials?.instagram && <Instagram className="hover:text-amber-400 cursor-pointer transition-colors" size={20} />}
-                          {adminProfile.socials?.twitter && <Twitter className="hover:text-amber-400 cursor-pointer transition-colors" size={20} />}
+                          {adminProfile.socials?.X && <X className="hover:text-amber-400 cursor-pointer transition-colors" size={20} />}
                         </div>
                       </div>
                     </div>
@@ -274,7 +274,7 @@ export default function About() {
                   <Facebook size={24} />
                 </a>
                 <a href="#" className="text-gray-300 hover:text-gray-100 transition-colors">
-                  <Twitter size={24} />
+                  <X size={24} />
                 </a>
               </div>
             </div>

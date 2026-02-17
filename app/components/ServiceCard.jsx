@@ -3,7 +3,7 @@ import { Clock, CheckCircle } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 
-export default function ServiceCard({ service, addToCart, index }) {
+export default function ServiceCard({ service, onBook, index }) {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 32 }}
@@ -58,7 +58,7 @@ export default function ServiceCard({ service, addToCart, index }) {
           <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={addToCart}
+            onClick={() => onBook(service)}
             className="px-6 py-2.5 bg-linear-to-r from-amber-700 to-amber-900 text-amber-50 font-semibold rounded-full hover:from-amber-600 hover:to-amber-800 transition-all duration-300 text-sm shadow-lg shadow-amber-900/40"
           >
             Book Now

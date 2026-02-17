@@ -14,6 +14,11 @@ const profileSchema = new mongoose.Schema({
         trim: true,
         match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
     },
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+        minlength: [6, 'Password must be at least 6 characters']
+    },
     role: {
         type: String,
         enum: ['user', 'admin'],
@@ -22,7 +27,7 @@ const profileSchema = new mongoose.Schema({
     socials: {
         instagram: { type: String, default: "" },
         facebook: { type: String, default: "" },
-        twitter: { type: String, default: "" },
+        X: { type: String, default: "" },
         tiktok: { type: String, default: "" }
     },
     bio: {
@@ -64,7 +69,9 @@ const profileSchema = new mongoose.Schema({
 const bookingSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
-    serviceId: { type: Number, required: true },
+    phone: { type: String, required: true },
+    address: { type: String, required: true },
+    serviceId: { type: String, required: true },
     status: { type: String, enum: ["pending", "confirmed", "completed", "cancelled"], default: "pending" },
     date: { type: Date, default: Date.now }
 }, { timestamps: true });
@@ -93,10 +100,23 @@ const promotionSchema = new mongoose.Schema({
     isActive: { type: Boolean, default: true }
 }, { timestamps: true });
 
+const serviceSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    imageUrl: { type: String, required: true },
+    category: { type: String, required: true },
+    price: { type: String, required: true },
+    duration: { type: String, required: true },
+    iconName: { type: String, default: "Sparkles" },
+    imageColor: { type: String },
+    description: { type: String, required: true },
+    features: [{ type: String }]
+}, { timestamps: true });
+
 const Profile = mongoose.models.Profile || mongoose.model("Profile", profileSchema);
 const Booking = mongoose.models.Booking || mongoose.model("Booking", bookingSchema);
 const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
 const Content = mongoose.models.Content || mongoose.model("Content", contentSchema);
 const Promotion = mongoose.models.Promotion || mongoose.model("Promotion", promotionSchema);
+const Service = mongoose.models.Service || mongoose.model("Service", serviceSchema);
 
-export { Profile, Booking, Order, Content, Promotion };
+export { Profile, Booking, Order, Content, Promotion, Service };
